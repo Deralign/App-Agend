@@ -1,45 +1,26 @@
 import { View, Text, StyleSheet, TouchableOpacity, useState, ScrollView } from 'react-native';
 import TarefaItem from '../components/TarefaItem';
-import { useNavigation } from '@react-navigation/native';
+
 
 export default function Home(){
-    const navigation = useNavigation()
+
     
 
     return (
         <View style={styles.container}>
             <View style={styles.cabecalho}>
-                <Text style={styles.titulo}>ABRIL/2025</Text>
+                <Text style={styles.titulo}>Adicionar Tarefa</Text>
                 <View style={styles.icone}>
                     <Text style={styles.botaoFechar}>⚙️</Text>
                 </View>
             </View>
             <ScrollView style={styles.body}>
-                <TarefaItem 
-                nome="Tarefa 2"
-                status="a cumprir"
-                data="24/04/2004"
-                categoria="estudo"
-                />
-
-                <TarefaItem 
-                nome="Tarefa 2"
-                status="a cumprir"
-                data="24/04/2004"
-                categoria="estudo"
-                />
-
-                <TarefaItem 
-                nome="Tarefa 2"
-                status="a cumprir"
-                data="24/04/2004"
-                categoria="estudo"
-                />
+                
             </ScrollView>
             <TouchableOpacity
                 style={styles.botaoAdicionar}
                 onPress={() => (
-                    navigation.navigate('NovaTarefa')
+                    alert("addedado")
                 )}
                 >
                     <Text style={styles.emoji}>➕</Text>
