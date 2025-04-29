@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet, TouchableOpacity, useState, ScrollView } from 'react-native';
 import TarefaItem from '../components/TarefaItem';
+import { Picker } from '@react-native-picker/picker'
+
+export default function Home() {
 
 
-export default function Home(){
-
-    
 
     return (
         <View style={styles.container}>
@@ -15,15 +15,15 @@ export default function Home(){
                 </View>
             </View>
             <ScrollView style={styles.body}>
-                
+
             </ScrollView>
             <TouchableOpacity
                 style={styles.botaoAdicionar}
                 onPress={() => (
                     alert("addedado")
                 )}
-                >
-                    <Text style={styles.emoji}>➕</Text>
+            >
+                <Text style={styles.emoji}>➕</Text>
             </TouchableOpacity>
         </View>
     );
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         position: 'absolute'
     },
     body: {
-        
+
     },
     botaoAdicionar: {
         backgroundColor: "#ffe033",

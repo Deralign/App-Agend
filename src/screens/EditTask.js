@@ -12,7 +12,7 @@ export default function EditarTarefa({ tarefaId }) {
   });
 
   useEffect(() => {
-   
+
     axios.get(`http://localhost:3000/api/tarefas/${tarefaId}`)
       .then((res) => setTarefa(res.data))
       .catch((err) => console.error('Erro ao buscar tarefa', err));

@@ -2,9 +2,9 @@ import { View, Text, StyleSheet, TouchableOpacity, useState, ScrollView } from '
 import TarefaItem from '../components/TarefaItem';
 import { useNavigation } from '@react-navigation/native';
 
-export default function Home(){
+export default function Home() {
     const navigation = useNavigation()
-    
+
 
     return (
         <View style={styles.container}>
@@ -15,25 +15,25 @@ export default function Home(){
                 </View>
             </View>
             <ScrollView style={styles.body}>
-                <TarefaItem 
-                nome="Tarefa 2"
-                status="a cumprir"
-                data="24/04/2004"
-                categoria="estudo"
+                <TarefaItem
+                    nome="Tarefa 2"
+                    status="a cumprir"
+                    data="24/04/2004"
+                    categoria="estudo"
                 />
 
-                <TarefaItem 
-                nome="Tarefa 2"
-                status="a cumprir"
-                data="24/04/2004"
-                categoria="estudo"
+                <TarefaItem
+                    nome="Tarefa 2"
+                    status="a cumprir"
+                    data="24/04/2004"
+                    categoria="estudo"
                 />
 
-                <TarefaItem 
-                nome="Tarefa 2"
-                status="a cumprir"
-                data="24/04/2004"
-                categoria="estudo"
+                <TarefaItem
+                    nome="Tarefa 2"
+                    status="a cumprir"
+                    data="24/04/2004"
+                    categoria="estudo"
                 />
             </ScrollView>
             <TouchableOpacity
@@ -41,8 +41,8 @@ export default function Home(){
                 onPress={() => (
                     navigation.navigate('NovaTarefa')
                 )}
-                >
-                    <Text style={styles.emoji}>➕</Text>
+            >
+                <Text style={styles.emoji}>➕</Text>
             </TouchableOpacity>
         </View>
     );
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
         position: 'absolute'
     },
     body: {
-        
+
     },
     botaoAdicionar: {
         backgroundColor: "#ffe033",

@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 export default function TarefaItem(props) {
 
@@ -15,7 +15,7 @@ export default function TarefaItem(props) {
                 <Text style={styles.textoStatus}>{props.status}</Text>
             </View>
         </View>
-        
+
     )
 }
 
