@@ -1,18 +1,21 @@
-import { View, Text, StyleSheet, TouchableOpacity, useState, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, useState, ScrollView, Image } from 'react-native';
 import TarefaItem from '../components/TarefaItem';
 import { useNavigation } from '@react-navigation/native';
+import iconeConfig from '../components/Imgs/1.png'
+import iconeAdd from '../components/Imgs/2.png'
 
 export default function Home() {
     const navigation = useNavigation()
-
 
     return (
         <View style={styles.container}>
             <View style={styles.cabecalho}>
                 <Text style={styles.titulo}>ABRIL/2025</Text>
-                <View style={styles.icone}>
-                    <Text style={styles.botaoFechar}>⚙️</Text>
-                </View>
+                <TouchableOpacity style={styles.icone}>
+                    <Image style={styles.imagemConfig} source={iconeConfig}>
+
+                    </Image>
+                </TouchableOpacity>
             </View>
             <ScrollView style={styles.body}>
                 <TarefaItem
@@ -42,7 +45,7 @@ export default function Home() {
                     navigation.navigate('NovaTarefa')
                 )}
             >
-                <Text style={styles.emoji}>➕</Text>
+                <Image style={styles.imagemAdds} source={iconeAdd}></Image>
             </TouchableOpacity>
         </View>
     );
@@ -53,7 +56,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     cabecalho: {
-        backgroundColor: '#f1c739',
+        backgroundColor: '#369ae8',
         width: '100%',
         height: 70,
         justifyContent: 'center',
@@ -68,39 +71,37 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginTop: 2,
         textAlign: 'center',
-        fontWeight: 'bold'
-    },
-    icone: {
-        backgroundColor: 'grey',
-        width: 45,
-        height: 45,
-        borderRadius: 25,
-        right: 15,
-        position: 'absolute'
+        fontWeight: 'bold',
     },
     body: {
 
     },
+    icone: {
+        backgroundColor: 'transparent',
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        right: 20,
+        position: 'absolute',
+        borderRadius: 0,
+    },
     botaoAdicionar: {
-        backgroundColor: "#ffe033",
+        backgroundColor: "#369ae8",
         width: 70,
         height: 70,
         borderRadius: 35,
         position: 'absolute',
         bottom: "2%",
         right: "4%",
-        borderWidth: 3,
-        borderStyle: 'dashed',
     },
-    emoji: {
-        margin: 'auto',
-        marginBottom: 8,
-        fontSize: 40,
-        color: 'white'
+    imagemAdds: {
+        height: 77.5,
+        width: 77.5,
+        marginLeft: -4,
+        marginTop: -3
     },
-    botaoFechar: {
-        fontSize: 30,
-        textAlign: 'center',
-        marginTop: 1.5,
+    imagemConfig: {
+        height: 50,
+        width: 50
     },
 });

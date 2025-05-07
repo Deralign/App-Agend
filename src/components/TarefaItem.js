@@ -52,11 +52,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         position: 'absolute',
-        left: 305,
-        bottom: 10
+        left: '70%',
+        bottom: "4%"
     },
     textoStatus: {
         color: 'white',
         margin: 'auto',
+        marginTop: 3.5,
     }
 });
