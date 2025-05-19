@@ -23,6 +23,7 @@ export default function Home() {
                     status="a cumprir"
                     data="24/04/2004"
                     categoria="estudo"
+                    descricao="estudar roblox studio sim e não e sim e talvez e não sim nao sim"
                 />
 
                 <TarefaItem
@@ -86,19 +87,16 @@ const styles = StyleSheet.create({
         borderRadius: 0,
     },
     botaoAdicionar: {
-        backgroundColor: "#369ae8",
-        width: 70,
-        height: 70,
+        width: 95,
+        height: 95,
         borderRadius: 35,
         position: 'absolute',
         bottom: "2%",
         right: "4%",
     },
     imagemAdds: {
-        height: 77.5,
-        width: 77.5,
-        marginLeft: -4,
-        marginTop: -3
+        height: '100%',
+        width: '100%',
     },
     imagemConfig: {
         height: 50,
