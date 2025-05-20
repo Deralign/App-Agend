@@ -19,25 +19,27 @@ export default function Home() {
             </View>
             <ScrollView style={styles.body}>
                 <TarefaItem
-                    nome="Tarefa 2"
-                    status="a cumprir"
+                    nome="Estudar"
+                    statusTex="a cumprir"
                     data="24/04/2004"
                     categoria="estudo"
-                    descricao="estudar roblox studio sim e não e sim e talvez e não sim nao sim"
+                    descricao="Lembre-se de estudar a como fazer modelos 3D utilizando o Blender."
                 />
 
                 <TarefaItem
-                    nome="Tarefa 2"
-                    status="a cumprir"
+                    nome="Regar"
+                    statusTex="a cumprir"
                     data="24/04/2004"
                     categoria="estudo"
+                    descricao="Regar a planta da frente."
                 />
 
                 <TarefaItem
-                    nome="Tarefa 2"
-                    status="a cumprir"
+                    nome="Trocar a água"
+                    statusTex="concluído"
                     data="24/04/2004"
                     categoria="estudo"
+                    descricao="Trocar a água da vasilha dos cachorros."
                 />
             </ScrollView>
             <TouchableOpacity

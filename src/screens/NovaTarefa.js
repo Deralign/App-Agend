@@ -25,7 +25,7 @@ export default function addTaskScreen() {
                 <TextInput style={styles.input} placeholder='Digite o nome da tarefa'></TextInput>
 
                 <Text style={styles.texto}>Descrição da tarefa</Text>
-                <TextInput style={styles.input} multiline placeholder='Digite a descrição da tarefa'></TextInput>
+                <TextInput style={styles.descricao} multiline placeholder='Digite a descrição da tarefa' numberOfLines={2}></TextInput>
 
                 <Text style={styles.texto}>Selecione a data</Text>
                 <Picker style={styles.dataPicker}></Picker>
@@ -57,8 +57,14 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontWeight: 'bold'
     },
-    conteudo: {
-        
+    descricao: {
+        borderWidth: 1.5,
+        borderColor: '#3e99e0',
+        borderRadius: 5,
+        height: 45,
+        width: '92.5%',
+        marginTop: 12.5,
+        margin: 'auto'
     },
     texto: {
         fontSize: 16,
