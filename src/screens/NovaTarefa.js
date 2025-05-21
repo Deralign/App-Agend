@@ -1,11 +1,31 @@
-import { View, Text, StyleSheet, TouchableOpacity, useState, TextInput, Image} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
 import TarefaItem from '../components/TarefaItem';
 import { useNavigation } from '@react-navigation/native';
-import { Picker } from '@react-native-picker/picker'
-import iconeVoltar from '../components/Imgs/3.png'
+import { Picker } from '@react-native-picker/picker';
+import { useState } from 'react';
+import { addData } from '../storage/async-storage'
+import iconeVoltar from '../components/Imgs/3.png';
+import iconeConfirm from '../components/Imgs/4.png';
 
 export default function addTaskScreen() {
+    
     const navigation = useNavigation()
+
+    const [nome, setNome] = useState('');
+    const [descricao, setDesc] = useState('');
+    const [data, setData] = useState('');
+    const [categoria, setCate] = useState('');
+
+    const handleSave = () => {
+        const tarefa = {
+            nome: nome,
+            descricao: descricao,
+            data: data,
+            categoria: categoria
+        };
+        addData()
+        navigation.navigate('Home')
+    }
 
     return (
         <View style={styles.container}>
@@ -22,14 +42,25 @@ export default function addTaskScreen() {
 
             <View style={styles.conteudo}>
                 <Text style={styles.texto}>Nome da tarefa</Text>
-                <TextInput style={styles.input} placeholder='Digite o nome da tarefa'></TextInput>
+                <TextInput style={styles.input} placeholder='Digite o nome da tarefa' value={nome} onChangeText={texto => setNome(texto)}></TextInput>
 
                 <Text style={styles.texto}>Descrição da tarefa</Text>
-                <TextInput style={styles.descricao} multiline placeholder='Digite a descrição da tarefa' numberOfLines={2}></TextInput>
+                <TextInput style={styles.descricao} multiline placeholder='Digite a descrição da tarefa' numberOfLines={5} value={descricao} onChangeText={texto => setDesc(texto)}></TextInput>
+
+                <Text style={styles.texto}>Categoria</Text>
+                <TextInput style={styles.input} placeholder='Digite categoria da tarefa' value={categoria} onChangeText={texto => setCate(texto)}></TextInput>
 
                 <Text style={styles.texto}>Selecione a data</Text>
-                <Picker style={styles.dataPicker}></Picker>
+                <Picker style={styles.dataPicker} selectedValue={data} onValueChange={dataa => setData(dataa)}></Picker>
             </View>
+
+            <TouchableOpacity
+                style={styles.botaoConfirmar}
+                onPress={() => {handleSave()}}>
+                <Image style={styles.iconeConfirmar} source={iconeConfirm}>
+
+                </Image>
+            </TouchableOpacity>
 
         </View>
     );
@@ -61,7 +92,7 @@ const styles = StyleSheet.create({
         borderWidth: 1.5,
         borderColor: '#3e99e0',
         borderRadius: 5,
-        height: 45,
+        height: 'auto',
         width: '92.5%',
         marginTop: 12.5,
         margin: 'auto'
@@ -82,7 +113,7 @@ const styles = StyleSheet.create({
     },
     dataPicker: {
         width: '92.5%',
-        height: '15%',
+        height: '10%',
         margin: 'auto',
         marginTop: 15,
         borderRadius: 5,
@@ -100,5 +131,18 @@ const styles = StyleSheet.create({
     iconeVoltar: {
         height: 50,
         width: 50
+    },
+    botaoConfirmar: {
+        width: 95,
+        height: 95,
+        borderRadius: 35,
+        position: 'absolute',
+        bottom: "2%",
+        right: "4%",
+    },
+    iconeConfirmar: {
+        width: '82.5%',
+        height: '82.5%',
+        margin: 'auto'
     },
 });

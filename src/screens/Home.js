@@ -18,6 +18,19 @@ export default function Home() {
                 </TouchableOpacity>
             </View>
             <ScrollView style={styles.body}>
+                {
+                    tasks != null && tasks.map((item) => {
+                        return(
+                            <TarefaItem 
+                                nome={item.nome}
+                                status={item.status}
+                                data={item.data}
+                                categoria={item.categoria}
+                            />
+                        );
+                    })
+                }
+
                 <TarefaItem
                     nome="Estudar"
                     statusTex="a cumprir"
@@ -30,7 +43,7 @@ export default function Home() {
                     nome="Regar"
                     statusTex="a cumprir"
                     data="24/04/2004"
-                    categoria="estudo"
+                    categoria="atividade"
                     descricao="Regar a planta da frente."
                 />
 
@@ -38,9 +51,26 @@ export default function Home() {
                     nome="Trocar a água"
                     statusTex="concluído"
                     data="24/04/2004"
-                    categoria="estudo"
+                    categoria="saude"
                     descricao="Trocar a água da vasilha dos cachorros."
                 />
+
+                <TarefaItem
+                    nome="Beber leite"
+                    statusTex="concluído"
+                    data="24/04/2004"
+                    categoria="saude"
+                    descricao="De madrugada beber leite porque é bom."
+                />
+
+                <TarefaItem
+                    nome="Limpar a casa"
+                    statusTex="a cumprir"
+                    data="24/04/2004"
+                    categoria="lazer"
+                    descricao="Limpar a casa as 22:00."
+                />
+
             </ScrollView>
             <TouchableOpacity
                 style={styles.botaoAdicionar}
@@ -48,7 +78,8 @@ export default function Home() {
                     navigation.navigate('NovaTarefa')
                 )}
             >
-                <Image style={styles.imagemAdds} source={iconeAdd}></Image>
+                <Image style={styles.imagemAdds} source={iconeAdd}>
+                </Image>
             </TouchableOpacity>
         </View>
     );

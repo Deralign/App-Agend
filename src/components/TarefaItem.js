@@ -2,8 +2,10 @@ import { View, Text, StyleSheet } from 'react-native';
 
 export default function TarefaItem(props) {
 
+    let statCor = 'orange';
+
     if (props.statusTex == 'concluído') {
-        statusTex = 'green';
+        statCor = '#27bc3b';
     }
 
     return (
@@ -15,7 +17,7 @@ export default function TarefaItem(props) {
             </View>
             <View style={styles.retangulo}>
                 <Text style={styles.data}>{props.data}</Text>
-                <View style={styles.statuss}>
+                <View style={{...styles.statuss, backgroundColor: statCor}}>
                     <Text style={styles.textoStatus}>{props.statusTex}</Text>
                 </View>
             </View>
@@ -42,11 +44,13 @@ const styles = StyleSheet.create({
         marginLeft: '1%',
         fontSize: 16,
         fontWeight: "bold",
+        fontStyle: 'italic'
     },
     categoria: {
         marginTop: 7,
         fontSize: 17,
-        marginLeft: 4
+        marginLeft: 4,
+        fontStyle: 'italic'
     },
     campoTexto: {
         width: '99%',
@@ -70,7 +74,6 @@ const styles = StyleSheet.create({
         paddingBottom: '2%'
     },
     statuss: {
-        backgroundColor: 'orange',
         width: '25%',
         height: 30,
         borderRadius: 5,
