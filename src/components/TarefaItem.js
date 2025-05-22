@@ -1,9 +1,18 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useState } from 'react';
 
 export default function TarefaItem(props) {
+    
+    const [isPressed, setIsPressed] = useState(false);
 
     let statCor = 'orange';
 
+    if (isPressed) {
+        props.statusTex = 'concluído';
+    } else {
+        props.statusTex = 'a cumprir';
+    }
+    
     if (props.statusTex == 'concluído') {
         statCor = '#27bc3b';
     }
@@ -17,12 +26,11 @@ export default function TarefaItem(props) {
             </View>
             <View style={styles.retangulo}>
                 <Text style={styles.data}>{props.data}</Text>
-                <View style={{...styles.statuss, backgroundColor: statCor}}>
+                <TouchableOpacity style={{...styles.statuss, backgroundColor: statCor}} onPress={() => setIsPressed(!isPressed)}>
                     <Text style={styles.textoStatus}>{props.statusTex}</Text>
-                </View>
+                </TouchableOpacity>
             </View>
         </View>
-
     )
 }
 

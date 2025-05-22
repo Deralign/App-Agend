@@ -1,11 +1,28 @@
-import { View, Text, StyleSheet, TouchableOpacity, useState, ScrollView, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import TarefaItem from '../components/TarefaItem';
 import { useNavigation } from '@react-navigation/native';
-import iconeConfig from '../components/Imgs/1.png'
-import iconeAdd from '../components/Imgs/2.png'
+import { getData } from '../storage/async-storage';
+import iconeConfig from '../components/Imgs/1.png';
+import iconeAdd from '../components/Imgs/2.png';
 
 export default function Home() {
     const navigation = useNavigation()
+
+    const [tasks, setTasks] = useState(null)
+    const [isLoaded, setIsLoaded] = useState(true)
+
+    const loadData = async () => {
+        const data = await getData();
+        setTasks(data);
+        setIsLoaded(!isLoaded)
+    }
+
+    useEffect(() => {
+       if (isLoaded) {
+            loadData()
+       }
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -19,57 +36,19 @@ export default function Home() {
             </View>
             <ScrollView style={styles.body}>
                 {
-                    tasks != null && tasks.map((item) => {
+                    tasks != null && tasks.map((item, index) => {
                         return(
                             <TarefaItem 
+                                key={index}
                                 nome={item.nome}
-                                status={item.status}
+                                descricao={item.descricao}
                                 data={item.data}
                                 categoria={item.categoria}
+                                statusTex='a cumprir'
                             />
                         );
                     })
                 }
-
-                <TarefaItem
-                    nome="Estudar"
-                    statusTex="a cumprir"
-                    data="24/04/2004"
-                    categoria="estudo"
-                    descricao="Lembre-se de estudar a como fazer modelos 3D utilizando o Blender."
-                />
-
-                <TarefaItem
-                    nome="Regar"
-                    statusTex="a cumprir"
-                    data="24/04/2004"
-                    categoria="atividade"
-                    descricao="Regar a planta da frente."
-                />
-
-                <TarefaItem
-                    nome="Trocar a água"
-                    statusTex="concluído"
-                    data="24/04/2004"
-                    categoria="saude"
-                    descricao="Trocar a água da vasilha dos cachorros."
-                />
-
-                <TarefaItem
-                    nome="Beber leite"
-                    statusTex="concluído"
-                    data="24/04/2004"
-                    categoria="saude"
-                    descricao="De madrugada beber leite porque é bom."
-                />
-
-                <TarefaItem
-                    nome="Limpar a casa"
-                    statusTex="a cumprir"
-                    data="24/04/2004"
-                    categoria="lazer"
-                    descricao="Limpar a casa as 22:00."
-                />
 
             </ScrollView>
             <TouchableOpacity
@@ -128,8 +107,9 @@ const styles = StyleSheet.create({
         right: "4%",
     },
     imagemAdds: {
-        height: '100%',
-        width: '100%',
+        height: '90%',
+        width: '90%',
+        margin: 'auto'
     },
     imagemConfig: {
         height: 50,

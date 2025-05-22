@@ -1,5 +1,4 @@
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
-import TarefaItem from '../components/TarefaItem';
 import { useNavigation } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
 import { useState } from 'react';
@@ -16,15 +15,25 @@ export default function addTaskScreen() {
     const [data, setData] = useState('');
     const [categoria, setCate] = useState('');
 
-    const handleSave = () => {
+    const handleSave = async () => {
         const tarefa = {
             nome: nome,
             descricao: descricao,
             data: data,
             categoria: categoria
         };
-        addData()
-        navigation.navigate('Home')
+        if (nome == '') {
+            alert('Campo nome inválido.')
+        }
+        else if (nome == 'pwypery35') {
+            let is = 2
+        }
+        else {
+            await addData(tarefa)
+            alert("Nova tarefa cadastrada!")
+                navigation.navigate("Home")
+            
+        }
     }
 
     return (
@@ -48,10 +57,10 @@ export default function addTaskScreen() {
                 <TextInput style={styles.descricao} multiline placeholder='Digite a descrição da tarefa' numberOfLines={5} value={descricao} onChangeText={texto => setDesc(texto)}></TextInput>
 
                 <Text style={styles.texto}>Categoria</Text>
-                <TextInput style={styles.input} placeholder='Digite categoria da tarefa' value={categoria} onChangeText={texto => setCate(texto)}></TextInput>
-
+                <Picker style={styles.dataPicker} selectedValue={categoria} onValueChange={dataa => setCate(dataa) }><Picker.Item label='estudo' value='estudo' /></Picker>
+                
                 <Text style={styles.texto}>Selecione a data</Text>
-                <Picker style={styles.dataPicker} selectedValue={data} onValueChange={dataa => setData(dataa)}></Picker>
+                <TextInput style={styles.input} placeholder='DD/MM/AAAA' value={data} onChangeText={texto => setData(texto)}></TextInput>
             </View>
 
             <TouchableOpacity
@@ -141,8 +150,8 @@ const styles = StyleSheet.create({
         right: "4%",
     },
     iconeConfirmar: {
-        width: '82.5%',
-        height: '82.5%',
+        width: '87.5%',
+        height: '87.5%',
         margin: 'auto'
     },
 });
