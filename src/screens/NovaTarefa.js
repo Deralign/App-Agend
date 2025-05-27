@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
+import MaskInput from 'react-native-mask-input';
 import { useNavigation } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
 import { useState } from 'react';
@@ -22,16 +23,22 @@ export default function addTaskScreen() {
             data: data,
             categoria: categoria
         };
-        if (nome == '') {
+        if (nome.trim() == '') {
             alert('Campo nome inválido.')
         }
-        else if (nome == 'pwypery35') {
-            let is = 2
+        else if (descricao.trim() == '') {
+            alert("Campo descrição não válido.")
+        }
+        else if (data.trim() == '') {
+            alert("Campo data não válido.")
+        }
+        else if (categoria.trim() == '') {
+            alert("Campo categoria não válido.")
         }
         else {
             await addData(tarefa)
             alert("Nova tarefa cadastrada!")
-                navigation.navigate("Home")
+            navigation.navigate("Home")
             
         }
     }
@@ -57,10 +64,16 @@ export default function addTaskScreen() {
                 <TextInput style={styles.descricao} multiline placeholder='Digite a descrição da tarefa' numberOfLines={5} value={descricao} onChangeText={texto => setDesc(texto)}></TextInput>
 
                 <Text style={styles.texto}>Categoria</Text>
-                <Picker style={styles.dataPicker} selectedValue={categoria} onValueChange={dataa => setCate(dataa) }><Picker.Item label='estudo' value='estudo' /></Picker>
+                <Picker style={styles.dataPicker} selectedValue={categoria} onValueChange={dataa => setCate(dataa) }>
+                    <Picker.Item label='estudo' value='estudo' />
+                    <Picker.Item label='lazer' value='lazer' />
+                    <Picker.Item label='programação' value='programacao' />
+                    <Picker.Item label='trabalho' value='trabalho' />
+                    <Picker.Item label='projeto' value='projeto' />
+                </Picker>
                 
                 <Text style={styles.texto}>Selecione a data</Text>
-                <TextInput style={styles.input} placeholder='DD/MM/AAAA' value={data} onChangeText={texto => setData(texto)}></TextInput>
+                <MaskInput style={styles.input} placeholder='DD/MM/AAAA' value={data} mask={[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]} onChangeText={texto => setData(texto)}></MaskInput>
             </View>
 
             <TouchableOpacity

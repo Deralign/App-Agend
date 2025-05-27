@@ -11,6 +11,10 @@ export default function Home() {
 
     const [tasks, setTasks] = useState(null)
     const [isLoaded, setIsLoaded] = useState(true)
+    
+    const clic = (item) => {
+        if (item.clicado == true) {return 'concluído'} else {return 'a cumprir'}
+    }
 
     const loadData = async () => {
         const data = await getData();
@@ -44,7 +48,7 @@ export default function Home() {
                                 descricao={item.descricao}
                                 data={item.data}
                                 categoria={item.categoria}
-                                statusTex='a cumprir'
+                                statusTex={(clic(item))}
                             />
                         );
                     })

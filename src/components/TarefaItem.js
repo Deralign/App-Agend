@@ -1,21 +1,9 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 export default function TarefaItem(props) {
-    
-    const [isPressed, setIsPressed] = useState(false);
 
-    let statCor = 'orange';
-
-    if (isPressed) {
-        props.statusTex = 'concluído';
-    } else {
-        props.statusTex = 'a cumprir';
-    }
-    
-    if (props.statusTex == 'concluído') {
-        statCor = '#27bc3b';
-    }
+    const [isCompleted, setIsCompleted] = useState(props.statusTex === 'concluído');
 
     return (
         <View style={styles.container}>
@@ -26,7 +14,7 @@ export default function TarefaItem(props) {
             </View>
             <View style={styles.retangulo}>
                 <Text style={styles.data}>{props.data}</Text>
-                <TouchableOpacity style={{...styles.statuss, backgroundColor: statCor}} onPress={() => setIsPressed(!isPressed)}>
+                <TouchableOpacity style={{...styles.statuss, backgroundColor: isCompleted ? '#4CAF50' : 'orange'}} onPress={() => setIsCompleted(!isCompleted)}>
                     <Text style={styles.textoStatus}>{props.statusTex}</Text>
                 </TouchableOpacity>
             </View>
