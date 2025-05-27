@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image, ScrollView } from 'react-native';
 import MaskInput from 'react-native-mask-input';
 import { useNavigation } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
@@ -56,7 +56,7 @@ export default function addTaskScreen() {
 
             </View>
 
-            <View style={styles.conteudo}>
+            <ScrollView contentContainerStyle={{ paddingBottom: 120 }} style={styles.conteudo}>
                 <Text style={styles.texto}>Nome da tarefa</Text>
                 <TextInput style={styles.input} placeholder='Digite o nome da tarefa' value={nome} onChangeText={texto => setNome(texto)}></TextInput>
 
@@ -74,7 +74,7 @@ export default function addTaskScreen() {
                 
                 <Text style={styles.texto}>Selecione a data</Text>
                 <MaskInput style={styles.input} placeholder='DD/MM/AAAA' value={data} mask={[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]} onChangeText={texto => setData(texto)}></MaskInput>
-            </View>
+            </ScrollView>
 
             <TouchableOpacity
                 style={styles.botaoConfirmar}

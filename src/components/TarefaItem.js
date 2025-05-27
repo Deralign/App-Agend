@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
+import botaoExcl from '../components/Imgs/5.png';
 
 export default function TarefaItem(props) {
 
@@ -8,6 +9,11 @@ export default function TarefaItem(props) {
     return (
         <View style={styles.container}>
             <Text style={styles.titulo}>{props.nome}</Text>
+            <TouchableOpacity style={styles.botaoExcluir}>
+                <Image style={styles.imagemExcluir} source={botaoExcl}>
+
+                </Image>
+            </TouchableOpacity>
             <Text style={styles.categoria}>{props.categoria}</Text>
             <View style={styles.campoTexto}>
                 <Text style={styles.descricao}>{props.descricao}</Text>
@@ -15,7 +21,7 @@ export default function TarefaItem(props) {
             <View style={styles.retangulo}>
                 <Text style={styles.data}>{props.data}</Text>
                 <TouchableOpacity style={{...styles.statuss, backgroundColor: isCompleted ? '#4CAF50' : 'orange'}} onPress={() => setIsCompleted(!isCompleted)}>
-                    <Text style={styles.textoStatus}>{props.statusTex}</Text>
+                    <Text style={styles.textoStatus}>{isCompleted ? 'concluído' : 'a cumprir'}</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -35,6 +41,16 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 21,
         textAlign: 'center',
+    },
+    botaoExcluir: {
+        position: 'absolute',
+        right: '30%',
+        top: '40$',
+        borderRadius: 5,
+    },
+    imagemExcluir: {
+        height: '100%',
+        width: '100%'
     },
     data: {
         marginLeft: '1%',
