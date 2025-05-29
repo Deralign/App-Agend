@@ -12,7 +12,6 @@ export default function Home() {
     const [tasks, setTasks] = useState(null)
     const [isLoaded, setIsLoaded] = useState(true)
 
-
     const loadData = async () => {
         const data = await getData();
         setTasks(data);
@@ -23,7 +22,7 @@ export default function Home() {
        if (isLoaded) {
             loadData()
        }
-    }, []);
+    }, [isLoaded]);
 
     return (
         <View style={styles.container}>
@@ -43,10 +42,8 @@ export default function Home() {
                         return(
                             <TarefaItem 
                                 key={index}
-                                nome={item.nome}
-                                descricao={item.descricao}
-                                data={item.data}
-                                categoria={item.categoria}
+                                task={item}
+                                setIsLoaded={setIsLoaded}
                             />
                         );
                     })
@@ -68,7 +65,7 @@ export default function Home() {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
     },
     cabecalho: {
         backgroundColor: '#369ae8',
