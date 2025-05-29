@@ -11,10 +11,6 @@ export default function Home() {
 
     const [tasks, setTasks] = useState(null)
     const [isLoaded, setIsLoaded] = useState(true)
-    
-    const clic = (item) => {
-        if (item.clicado == true) {return 'concluído'} else {return 'a cumprir'}
-    }
 
     const loadData = async () => {
         const data = await getData();
@@ -26,29 +22,28 @@ export default function Home() {
        if (isLoaded) {
             loadData()
        }
-    }, []);
+    }, [isLoaded]);
 
     return (
         <View style={styles.container}>
             <View style={styles.cabecalho}>
-                <Text style={styles.titulo}>ABRIL/2025</Text>
+                <Text style={styles.titulo}>TAREFAS</Text>
                 <TouchableOpacity style={styles.icone}>
                     <Image style={styles.imagemConfig} source={iconeConfig}>
 
                     </Image>
                 </TouchableOpacity>
             </View>
-            <ScrollView style={styles.body}>
+            <ScrollView style={styles.body} contentContainerStyle={{
+                paddingBottom: 120,
+            }}>
                 {
                     tasks != null && tasks.map((item, index) => {
                         return(
                             <TarefaItem 
                                 key={index}
-                                nome={item.nome}
-                                descricao={item.descricao}
-                                data={item.data}
-                                categoria={item.categoria}
-                                statusTex={(clic(item))}
+                                task={item}
+                                setIsLoaded={setIsLoaded}
                             />
                         );
                     })
@@ -70,7 +65,7 @@ export default function Home() {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
     },
     cabecalho: {
         backgroundColor: '#369ae8',
