@@ -1,6 +1,8 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import MaskInput from 'react-native-mask-input';
 import React, { useState } from 'react';
 import { removeData } from '../storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import botaoExcl from '../components/Imgs/5.png';
 import botaoEdit from '../components/Imgs/6.png';
 
@@ -8,6 +10,7 @@ export default function TarefaItem(props) {
 
     const [isCompleted, setIsCompleted] = useState(props.statusTex === 'concluído');
     const [visible, setVisible] = useState(false);
+    const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
     const handleDelete = async () => {
         await removeData(props.task)
@@ -19,20 +22,26 @@ export default function TarefaItem(props) {
         setVisible(true)
     }
 
+    const switchComponents = () => {
+        
+    }
+
+    const navigation = useNavigation()
+
     return (
         <View style={styles.container}>
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.botaoExcluir} onPress={() => showUp()}>
+                <TouchableOpacity style={styles.botaoExcluir} onPress={buttonsDisabled ? null : () => showUp()}>
                     <Image style={styles.imagemExcluir} source={botaoExcl}></Image>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.buttonEdit} onPress={1}>
+                <TouchableOpacity style={styles.buttonEdit} onPress={buttonsDisabled ? null : () => switchComponents()} >
                     <Image style={styles.imageEdit} source={botaoEdit}></Image>
                 </TouchableOpacity>
             </View>
             <Text style={styles.titulo}>{props.task.nome}</Text>
             <Text style={styles.categoria}>{props.task.categoria}</Text>
             <View style={styles.campoTexto}>
-                <Text style={styles.descricao}>{props.task.descricao}</Text>
+                <Text style={styles.descricao} numberOfLines={5} adjustsFontSizeToFit>{props.task.descricao}</Text>
             </View>
             <View style={styles.retangulo}>
                 <Text style={styles.data}>{props.task.data}</Text>
@@ -124,7 +133,7 @@ const styles = StyleSheet.create({
     descricao: {
         fontSize: 17,
         padding: 15,
-        paddingLeft: 5
+        paddingLeft: 5,
     },
     retangulo: {
         width: '92.5%',
