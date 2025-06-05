@@ -11,6 +11,7 @@ export default function Home() {
 
     const [tasks, setTasks] = useState(null)
     const [isLoaded, setIsLoaded] = useState(true)
+    const [editingTaskId, setEditingTaskId] = useState(null);
 
     const loadData = async () => {
         const data = await getData();
@@ -19,9 +20,9 @@ export default function Home() {
     }
 
     useEffect(() => {
-       if (isLoaded) {
+        if (isLoaded) {
             loadData()
-       }
+        }
     }, [isLoaded]);
 
     return (
@@ -39,11 +40,13 @@ export default function Home() {
             }}>
                 {
                     tasks != null && tasks.map((item, index) => {
-                        return(
-                            <TarefaItem 
+                        return (
+                            <TarefaItem
                                 key={index}
                                 task={item}
                                 setIsLoaded={setIsLoaded}
+                                editingTaskId={editingTaskId}
+                                setEditingTaskId={setEditingTaskId}
                             />
                         );
                     })

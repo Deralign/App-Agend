@@ -15,13 +15,15 @@ export default function addTaskScreen() {
     const [descricao, setDesc] = useState('');
     const [data, setData] = useState('');
     const [categoria, setCate] = useState('');
+    const [status, setStatus] = useState('');
 
     const handleSave = async () => {
         const tarefa = {
             nome: nome,
             descricao: descricao,
             data: data,
-            categoria: categoria
+            categoria: categoria,
+            statusTex: status
         };
         if (nome.trim() == '') {
             alert('Campo nome inválido.')
@@ -63,7 +65,7 @@ export default function addTaskScreen() {
                 <TextInput style={styles.descricao} multiline placeholder='Digite a descrição da tarefa' numberOfLines={5} value={descricao} onChangeText={texto => setDesc(texto)}></TextInput>
 
                 <Text style={styles.texto}>Categoria</Text>
-                <Picker style={styles.dataPicker} selectedValue='lazer' value='lazer' onValueChange={dataa => setCate(dataa) }>
+                <Picker style={styles.dataPicker} onValueChange={texto => setCate(texto) }>
                     <Picker.Item label='estudo' value='estudo' />
                     <Picker.Item label='lazer' value='lazer' />
                     <Picker.Item label='programação' value='programacao' />
@@ -89,7 +91,7 @@ export default function addTaskScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
     },
     cabecalho: {
         backgroundColor: '#369ae8',
