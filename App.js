@@ -1,19 +1,22 @@
-import * as React from 'react';
-import { createStaticNavigation } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from './src/screens/Home';
-import EditTask from './src/screens/EditTask';
-import NovaTarefa from './src/screens/NovaTarefa';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View } from 'react-native';
+import Home from './src/screens/Home'
 
-const RootStack = createNativeStackNavigator({
-  initialRouteName: 'Home',
-  screenOptions: {
-    headerShown: false
-  },
-  screens: {
-    Home: Home,
-    EditTask: EditTask,
-    NovaTarefa: NovaTarefa,
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <Text>Open up App.js to start working on your app!</Text>
+      <Home></Home>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
