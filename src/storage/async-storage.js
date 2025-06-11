@@ -3,18 +3,18 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const key = "task";
 
 const getData = async () => {
-    
-    let data= JSON.parse(await AsyncStorage.getItem(key))
+
+    let data = JSON.parse(await AsyncStorage.getItem(key))
 
     // se não houverem dados, preencher e salvar um array vazio
     if (data == null) {
         data = new Array()
         setData(data)
     }
-   return data
+    return data
 }
 
-const setData= async (value) => {
+const setData = async (value) => {
     await AsyncStorage.setItem(key, JSON.stringify(value));
 }
 
@@ -24,6 +24,19 @@ const addData = async (task) => {
     data.push(task)
     await setData(data)
 }
+
+const updateData = async (taskAtualizada) => {
+    const tasks = await getData();
+
+    const novasTasks = tasks.map(tarefa => {
+        if (tarefa.id === taskAtualizada.id) {
+            return taskAtualizada;
+        }
+        return tarefa;
+    });
+
+    await setData(novasTasks);
+};
 
 const removeData = async (task) => {
     const tasks = await getData();
@@ -37,12 +50,13 @@ const removeData = async (task) => {
             break
         }
     }
-   await setData(tasks)
+    await setData(tasks)
 }
 
 export {
     getData,
     setData,
     addData,
+    updateData,
     removeData
 }

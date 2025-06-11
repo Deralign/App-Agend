@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import TarefaItem from '../components/TarefaItem';
 import { useNavigation } from '@react-navigation/native';
 import { getData } from '../storage/async-storage';
-import iconeConfig from '../components/Imgs/1.png';
 import iconeAdd from '../components/Imgs/2.png';
 
 export default function Home() {
@@ -11,6 +10,7 @@ export default function Home() {
 
     const [tasks, setTasks] = useState(null)
     const [isLoaded, setIsLoaded] = useState(true)
+    const [editingTaskId, setEditingTaskId] = useState(null);
 
     const loadData = async () => {
         const data = await getData();
@@ -19,46 +19,45 @@ export default function Home() {
     }
 
     useEffect(() => {
-       if (isLoaded) {
+        if (isLoaded) {
             loadData()
-       }
+        }
     }, [isLoaded]);
 
     return (
         <View style={styles.container}>
             <View style={styles.cabecalho}>
                 <Text style={styles.titulo}>TAREFAS</Text>
-                <TouchableOpacity style={styles.icone}>
-                    <Image style={styles.imagemConfig} source={iconeConfig}>
-
-                    </Image>
-                </TouchableOpacity>
             </View>
             <ScrollView style={styles.body} contentContainerStyle={{
                 paddingBottom: 120,
             }}>
                 {
                     tasks != null && tasks.map((item, index) => {
-                        return(
-                            <TarefaItem 
+                        return (
+                            <TarefaItem
                                 key={index}
                                 task={item}
                                 setIsLoaded={setIsLoaded}
+                                editingTaskId={editingTaskId}
+                                setEditingTaskId={setEditingTaskId}
                             />
                         );
                     })
                 }
 
             </ScrollView>
-            <TouchableOpacity
-                style={styles.botaoAdicionar}
-                onPress={() => (
-                    navigation.navigate('NovaTarefa')
-                )}
-            >
-                <Image style={styles.imagemAdds} source={iconeAdd}>
-                </Image>
-            </TouchableOpacity>
+            {(editingTaskId === null) && (
+                <TouchableOpacity
+                    style={styles.botaoAdicionar}
+                    onPress={() => (
+                        navigation.navigate('NovaTarefa')
+                    )}
+                >
+                    <Image style={styles.imagemAdds} source={iconeAdd}>
+                    </Image>
+                </TouchableOpacity>
+            )}
         </View>
     );
 }
