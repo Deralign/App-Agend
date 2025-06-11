@@ -14,7 +14,7 @@ export default function addTaskScreen() {
     const [nome, setNome] = useState('');
     const [descricao, setDesc] = useState('');
     const [data, setData] = useState('');
-    const [categoria, setCate] = useState('');
+    const [categoria, setCate] = useState('estudo');
     const [status, setStatus] = useState('');
 
     const handleSave = async () => {
@@ -65,12 +65,12 @@ export default function addTaskScreen() {
                 <TextInput style={styles.descricao} multiline placeholder='Digite a descrição da tarefa' numberOfLines={5} value={descricao} onChangeText={texto => setDesc(texto)}></TextInput>
 
                 <Text style={styles.texto}>Categoria</Text>
-                <Picker style={styles.dataPicker} onValueChange={texto => setCate(texto) }>
-                    <Picker.Item label='estudo' value='estudo' />
-                    <Picker.Item label='lazer' value='lazer' />
-                    <Picker.Item label='programação' value='programacao' />
-                    <Picker.Item label='trabalho' value='trabalho' />
-                    <Picker.Item label='projeto' value='projeto' />
+                <Picker style={styles.dataPicker} selectedValue={categoria} onValueChange={texto => setCate(texto) }>
+                    <Picker.Item label='Estudo' value='Estudo' />
+                    <Picker.Item label='Lazer' value='Lazer' />
+                    <Picker.Item label='Programação' value='Programacao' />
+                    <Picker.Item label='Trabalho' value='Trabalho' />
+                    <Picker.Item label='Projeto' value='Projeto' />
                 </Picker>
                 
                 <Text style={styles.texto}>Selecione a data</Text>

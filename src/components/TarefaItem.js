@@ -2,9 +2,8 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, Modal, TextInput } fro
 import MaskInput from 'react-native-mask-input';
 import { Picker } from '@react-native-picker/picker'
 import React, { useState, useEffect } from 'react';
-import { addData, updateData, } from '../storage/async-storage'
+import { updateData, } from '../storage/async-storage'
 import { removeData } from '../storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
 import botaoExcl from '../components/Imgs/5.png';
 import botaoEdit from '../components/Imgs/6.png';
 import affirmImageSrc from '../components/Imgs/7.png';
@@ -16,21 +15,24 @@ export default function TarefaItem(props) {
     const [isCompleted, setIsCompleted] = useState(props.statusTex === 'concluído');
     const { task, setIsLoaded, editingTaskId, setEditingTaskId } = props;
     const [visible, setVisible] = useState(false);
-    const [buttonsDisabled, setButtonsDisabled] = useState(false);
+    const [visible2, setVisible2] = useState(false);
     const [nome, setNome] = useState(task.nome);
     const [descricao, setDesc] = useState(task.descricao);
     const [data, setData] = useState(task.data);
     const [categoria, setCate] = useState(task.categoria);
+    const [pendingStatus, setPendingStatus] = useState(isCompleted);
 
     const isEditing = editingTaskId === task.id;
 
     useEffect(() => {
-        if (!isEditing) {
+        if (isEditing) {
+            setPendingStatus(isCompleted);
+        } else {
+            setPendingStatus(isCompleted)
             setNome(task.nome);
             setDesc(task.descricao);
             setData(task.data);
             setCate(task.categoria);
-            setIsCompleted(task.statusTex === 'concluído');
             setVisible(false);
         }
     }, [editingTaskId]);
@@ -42,10 +44,14 @@ export default function TarefaItem(props) {
             descricao: descricao.trim() === '' ? task.descricao : descricao,
             data: data.trim() === '' ? task.data : data,
             categoria: categoria === '' ? task.categoria : categoria,
-            statusTex: isCompleted ? 'concluído' : 'a cumprir'
+            statusTex: pendingStatus ? 'concluído' : 'a cumprir'
         };
 
         await updateData(tarefaAtualizada);
+
+        setIsCompleted(pendingStatus);
+
+        setVisible2(false);
 
         setIsLoaded(true);
 
@@ -63,12 +69,16 @@ export default function TarefaItem(props) {
         setVisible(true);
     }
 
+    const showUp2 = () => {
+        setVisible2(true);
+    }
+
     const onPressEdit = () => {
         if (isEditing) {
-            
+
             setEditingTaskId(null);
         } else {
-            
+
             setEditingTaskId(task.id);
         }
     };
@@ -78,7 +88,7 @@ export default function TarefaItem(props) {
             {(editingTaskId === null || isEditing) && (
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity style={{ ...styles.botaoExcluir, backgroundColor: isEditing ? 'transparent' : null }} onPress={isEditing ? null : showUp}>
-                        <Image style={styles.imagemExcluir} source={botaoExcl}></Image>
+                        <Image style={styles.imagemExcluir} source={isEditing ? null : botaoExcl}></Image>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.buttonEdit} onPress={onPressEdit} >
                         <Image style={styles.imageEdit} source={botaoEdit}></Image>
@@ -87,25 +97,25 @@ export default function TarefaItem(props) {
             )}
             {isEditing ? (
                 <View>
-                    <TextInput style={styles.titulo} placeholder={task.nome} onChangeText={(texto) => setNome(texto)}></TextInput>
+                    <TextInput style={styles.titulo} placeholder={task.nome} maxLength={125} onChangeText={(texto) => setNome(texto)}></TextInput>
                     <Picker style={styles.dataPicker} onValueChange={(texto) => setCate(texto)}>
-                        <Picker.Item label='estudo' value='estudo' />
-                        <Picker.Item label='lazer' value='lazer' />
-                        <Picker.Item label='programação' value='programacao' />
-                        <Picker.Item label='trabalho' value='trabalho' />
-                        <Picker.Item label='projeto' value='projeto' />
+                        <Picker.Item label='Estudo' value='Estudo' />
+                        <Picker.Item label='Lazer' value='Lazer' />
+                        <Picker.Item label='Programação' value='Programação' />
+                        <Picker.Item label='Trabalho' value='Trabalho' />
+                        <Picker.Item label='Projeto' value='Projeto' />
                     </Picker>
                     <View style={styles.campoTexto}>
                         <TextInput style={styles.descricao} numberOfLines={5} adjustsFontSizeToFit placeholder={props.task.descricao} multiline onChangeText={(texto) => setDesc(texto)}></TextInput>
                     </View>
                     <View style={styles.retangulo}>
                         <MaskInput style={styles.data} placeholder={task.data} value={data} mask={[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]} onChangeText={(texto) => setData(texto)}></MaskInput>
-                        <TouchableOpacity style={{ ...styles.statuss, backgroundColor: isCompleted ? '#4CAF50' : 'orange' }} onPress={() => setIsCompleted(!isCompleted)}>
-                            <Text style={styles.textoStatus}>{isCompleted ? 'concluído' : 'a cumprir'}</Text>
+                        <TouchableOpacity style={{ ...styles.statuss, backgroundColor: pendingStatus ? '#4CAF50' : 'orange'}} onPress={() => setPendingStatus(!pendingStatus)}>
+                            <Text style={styles.textoStatus}>{pendingStatus ? 'concluído' : 'a cumprir'}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.autenticacao}>
-                        <TouchableOpacity style={styles.buttonAffirm} onPress={changeData}>
+                        <TouchableOpacity style={styles.buttonAffirm} onPress={showUp2}>
                             <Image style={styles.imageAffirm} source={affirmImageSrc}></Image>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.buttonCancel} onPress={() => setEditingTaskId(null)}>
@@ -118,13 +128,13 @@ export default function TarefaItem(props) {
                     <Text style={styles.titulo}>{task.nome}</Text>
                     <Text style={styles.categoria}>{task.categoria}</Text>
                     <View style={styles.campoTexto}>
-                        <Text style={styles.descricao} numberOfLines={5} adjustsFontSizeToFit>{task.descricao}</Text>
+                        <Text style={{ ...styles.descricao, paddingBottom: 5.10 }} numberOfLines={5} adjustsFontSizeToFit>{task.descricao}</Text>
                     </View>
                     <View style={styles.retangulo}>
                         <Text style={styles.data}>{task.data}</Text>
-                        <TouchableOpacity style={{ ...styles.statuss, backgroundColor: isCompleted ? '#4CAF50' : 'orange' }} onPress={() => setIsCompleted(!isCompleted)}>
+                        <View style={{ ...styles.statuss, backgroundColor: isCompleted ? '#4CAF50' : 'orange' }}>
                             <Text style={styles.textoStatus}>{isCompleted ? 'concluído' : 'a cumprir'}</Text>
-                        </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
             )}
@@ -137,6 +147,21 @@ export default function TarefaItem(props) {
                                 <Text>Sim</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.noButton} onPress={() => setVisible(false)}>
+                                <Text>Não</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
+            <Modal animationType="fade" transparent={true} visible={visible2} onRequestClose={() => setVisible2(false)}>
+                <View style={styles.modalOverlay}>
+                    <View style={styles.modalContent}>
+                        <Text style={styles.modalTitle} numberOfLines={3} adjustsFontSizeToFit>Tem certeza que deseja salvar as alterações na tarefa: '{task.nome}'?</Text>
+                        <View style={styles.buttonContainer}>
+                            <TouchableOpacity style={styles.yesButton} onPress={changeData}>
+                                <Text>Sim</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.noButton} onPress={() => setVisible2(false)}>
                                 <Text>Não</Text>
                             </TouchableOpacity>
                         </View>
